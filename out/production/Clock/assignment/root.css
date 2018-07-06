@@ -1,0 +1,20 @@
+#borderPane {
+    -fx-background-color: white;
+}
+
+.parentPane {
+    -fx-border-color: gray;
+    -fx-border-radius: 3px;
+    -fx-border-width: 1px;
+    -fx-background-color: #f8f8f8;
+}
+
+/*Label.digital {*/
+    /*-fx-font-size: 50px;*/
+/*}*/
+
+#hbox {
+    -fx-padding: 10;
+    -fx-border-width: 2;
+    -fx-border-color: #6b6969;
+}
