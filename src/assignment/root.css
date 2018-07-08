@@ -9,12 +9,12 @@
     -fx-background-color: #f8f8f8;
 }
 
-/*Label.digital {*/
-    /*-fx-font-size: 50px;*/
-/*}*/
-
-#hbox {
+.digitalClockBox {
     -fx-padding: 10;
     -fx-border-width: 2;
     -fx-border-color: #6b6969;
+}
+
+#f_time{
+    -fx-font-weight: bold;
 }

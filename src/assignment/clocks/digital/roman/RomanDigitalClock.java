@@ -1,26 +1,23 @@
 package assignment.clocks.digital.roman;
 
+import assignment.clocks.Clock;
 import assignment.clocks.digital.DigitalClock;
 import assignment.utils.RomanUtils;
-
-import java.time.LocalTime;
-import java.time.ZoneId;
 
 public class RomanDigitalClock extends DigitalClock {
     @Override
     public String getHourString() {
-        int hour = LocalTime.now(ZoneId.systemDefault()).getHour();
-        return pad(4, hour == 0 ? 12 : hour > 12 ? hour - 12 : hour);
+        return pad(4, (int) Clock.getHours() == 0 ? 12 : (int) Clock.getHours());
     }
 
     @Override
     public String getMinuteString() {
-        return pad(7, LocalTime.now(ZoneId.systemDefault()).getMinute());
+        return pad(7, (int) Clock.getMinutes());
     }
 
     @Override
     public String getSecondString() {
-        return pad(7, LocalTime.now(ZoneId.systemDefault()).getSecond());
+        return pad(7, (int) Clock.getSeconds());
     }
 
 

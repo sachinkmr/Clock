@@ -5,15 +5,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public abstract class Clock implements Initializable {
-    private boolean isAlarmSet = false;
 
     private ObjectProperty<Color> hourColor;
     private ObjectProperty<Color> minuteColor;
@@ -26,17 +26,18 @@ public abstract class Clock implements Initializable {
     protected String name;
 
     public Clock() {
-        this.hourColor = new SimpleObjectProperty<>(Color.valueOf("#6b6969"));
-        this.minuteColor = new SimpleObjectProperty<>(Color.valueOf("#6b6969"));
-        this.secondColor = new SimpleObjectProperty<>(Color.valueOf("red"));
-        this.faceColor = new SimpleObjectProperty<>(Color.valueOf("#6b6969"));
-        this.bgColor = new SimpleObjectProperty<>(Color.valueOf("white"));
+        hourColor = new SimpleObjectProperty<>(Color.valueOf("#6b6969"));
+        minuteColor = new SimpleObjectProperty<>(Color.valueOf("#6b6969"));
+        secondColor = new SimpleObjectProperty<>(Color.valueOf("red"));
+        faceColor = new SimpleObjectProperty<>(Color.valueOf("#6b6969"));
+        bgColor = new SimpleObjectProperty<>(Color.valueOf("white"));
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public final void initialize(URL location, ResourceBundle resources) {
         paintClockFace();
         drawHands();
+        resetColors();
         startClock();
     }
 
@@ -53,7 +54,6 @@ public abstract class Clock implements Initializable {
     public void showClock() {
         clockPane.setVisible(true);
     }
-
 
     public void setName(String name) {
         this.name = name;
@@ -72,41 +72,28 @@ public abstract class Clock implements Initializable {
     }
 
     public AnchorPane getClockPane() {
-        return clockPane;
+        return this.clockPane;
     }
-
-    public boolean isAlarmSet() {
-        return isAlarmSet;
-    }
-
-    public void setAlarmSet(boolean alarmSet) {
-        isAlarmSet = alarmSet;
-    }
-
 
     public ObjectProperty<Color> hourColorProperty() {
-        return hourColor;
+        return this.hourColor;
     }
-
 
     public ObjectProperty<Color> minuteColorProperty() {
-        return minuteColor;
+        return this.minuteColor;
     }
 
-
     public ObjectProperty<Color> secondColorProperty() {
-        return secondColor;
+        return this.secondColor;
     }
 
     public ObjectProperty<Color> faceColorProperty() {
-        return faceColor;
+        return this.faceColor;
     }
-
 
     public ObjectProperty<Color> bgColorProperty() {
-        return bgColor;
+        return this.bgColor;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -119,5 +106,23 @@ public abstract class Clock implements Initializable {
     @Override
     public int hashCode() {
         return Objects.hash(this.getName());
+    }
+
+    public static double getHours() {
+        double hours = LocalTime.now(ZoneId.systemDefault()).getHour()+getMinutes()/60;
+        return hours >= 12 ? hours - 12 : hours;
+    }
+
+    public static double getMinutes() {
+        return LocalTime.now(ZoneId.systemDefault()).getMinute()+getSeconds()/60;
+    }
+
+    public static double getSeconds() {
+        LocalTime time = LocalTime.now(ZoneId.systemDefault());
+        return time.getSecond() + (double) time.getNano()/1000000000;
+    }
+
+    public static String getAM_PM() {
+        return LocalTime.now(ZoneId.systemDefault()).getHour() < 12 ? "AM" : "PM";
     }
 }

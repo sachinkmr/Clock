@@ -1,6 +1,5 @@
 package assignment;
 
-import assignment.clocks.Clock;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,11 +27,12 @@ public class Launcher extends Application {
     }
 
     public void initClocks() {
-        launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/analog/analog.fxml")), "Analog Clock").showClock();
+        launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/analog/analog.fxml")), "Analog Clock");
         launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/digital/digital.fxml")), "Digital Clock");
+        launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/analog/mirrored/mirrored.fxml")), "Mirrored Analog Clock");
         launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/analog/roman/roman-analog.fxml")), "Roman Analog Clock");
         launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/digital/roman/roman-digital.fxml")), "Roman Digital Clock");
-        // launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/analog/mirrored/mirrored.fxml")), "Mirrored Analog Clock");
+        launcherController.registerClock(new FXMLLoader(getClass().getResource("clocks/analog/futuristic/futuristic.fxml")), "Futuristic Clock").showClock();
     }
 
     public static void main(String[] args) {

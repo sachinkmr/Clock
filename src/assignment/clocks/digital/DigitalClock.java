@@ -1,33 +1,17 @@
 package assignment.clocks.digital;
 
 import assignment.clocks.Clock;
-import assignment.clocks.analog.AnalogClock;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
-import javax.naming.Binding;
-import java.io.IOException;
-import java.net.URL;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class DigitalClock extends Clock {
     @FXML
@@ -80,20 +64,26 @@ public class DigitalClock extends Clock {
         hours.setText(getHourString());
         minutes.setText(getMinuteString());
         seconds.setText(getSecondString());
-        am_pm.setText(LocalTime.now(ZoneId.systemDefault()).getHour() < 12 ? "AM" : "PM");
+        am_pm.setText(Clock.getAM_PM());
+        if (LocalTime.now().getSecond() % 2 == 0) {
+            colon1.setVisible(true);
+            colon2.setVisible(true);
+        } else {
+            colon1.setVisible(false);
+            colon2.setVisible(false);
+        }
     }
 
     protected String getHourString() {
-        int hour = LocalTime.now(ZoneId.systemDefault()).getHour();
-        return pad(2, hour == 0 ? 12 : hour > 12 ? hour - 12 : hour);
+        return pad(2, (int) Clock.getHours() == 0 ? 12 : (int) Clock.getHours());
     }
 
     protected String getMinuteString() {
-        return pad(2, LocalTime.now(ZoneId.systemDefault()).getMinute());
+        return pad(2, (int) Clock.getMinutes());
     }
 
     protected String getSecondString() {
-        return pad(2, LocalTime.now(ZoneId.systemDefault()).getSecond());
+        return pad(2, (int) Clock.getSeconds());
     }
 
     protected String pad(int paddingCount, int s) {
